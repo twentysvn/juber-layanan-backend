@@ -90,6 +90,18 @@ class FoodishProductController extends Controller
         }
     }
 
+    public function getbyname(Request $request)
+    {
+        try {
+            $idrs = $request->idrs;
+            $query = $request->name;
+            $search = FoodishProduct::where('idrs', $idrs)->where('nama', 'LIKE', '%' . $query . '%')->get();
+            return ResponseFormatter::success($search, 'Berhasil mengambil data pencarian');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

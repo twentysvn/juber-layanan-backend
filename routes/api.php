@@ -43,6 +43,7 @@ Route::get('foodish/product/idrs/{idrs}', [FoodishProductController::class, 'byi
 Route::post('foodish/product', [FoodishProductController::class, 'store']);
 Route::put('foodish/product/{id}', [FoodishProductController::class, 'update']);
 Route::delete('foodish/product/{id}', [FoodishProductController::class, 'destroy']);
+Route::post('foodish/product/search', [FoodishProductController::class, 'getbyname']);
 
 Route::get('rekening', [RekeningController::class, 'index']);
 Route::get('rekening/{id}', [RekeningController::class, 'show']);
