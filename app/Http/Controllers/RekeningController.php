@@ -68,7 +68,7 @@ class RekeningController extends Controller
     public function show($id)
     {
         try {
-            $rekening = Rekening::finOrFail($id)->get();
+            $rekening = Rekening::findOrFail($id)->get();
             return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
         } catch (\Throwable $th) {
             return ResponseFormatter::error(null, $th->getMessage(), 500);
