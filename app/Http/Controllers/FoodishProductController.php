@@ -49,6 +49,11 @@ class FoodishProductController extends Controller
         //
     }
 
+    public function byidrs($idrs)
+    {
+        # code...
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

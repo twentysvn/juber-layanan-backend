@@ -27,9 +27,9 @@ class CreateAlamatMerchantsTable extends Migration
             $table->string('kecamatan');
             $table->string('kode_pos');
             $table->string('jalan');
-            $table->string('rincian');
-            $table->string('lat');
-            $table->string('lon');
+            $table->string('rincian')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lon')->nullable();
             $table->timestamps();
         });
     }

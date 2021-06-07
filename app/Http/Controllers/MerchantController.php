@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RequestChecker;
 use App\Models\Merchant;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 
 class MerchantController extends Controller
 {
@@ -14,7 +16,12 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $merchant = Merchant::all();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -35,7 +42,23 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::add('nama_toko', 'nama_toko', $request, $dataTable);
+            $dataTable = RequestChecker::add('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('gender', 'gender', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('tanggal_lahir', 'tanggal_lahir', $request, $dataTable);
+            $dataTable = RequestChecker::add('profile_img', 'profile_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('cover_img', 'cover_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('profile', 'profile', $request, $dataTable);
+            $dataTable = RequestChecker::add('pin', 'pin', $request, $dataTable);
+            $dataTable = RequestChecker::add('no_hp', 'no_hp', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
+            $merchant = Merchant::create($dataTable);
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -44,9 +67,24 @@ class MerchantController extends Controller
      * @param  \App\Models\Merchant  $merchant
      * @return \Illuminate\Http\Response
      */
-    public function show(Merchant $merchant)
+    public function show($id)
     {
-        //
+        try {
+            $merchant = Merchant::findOrFail($id)->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
+    }
+
+    public function byidrs($idrs)
+    {
+        try {
+            $merchant = Merchant::where('idrs', $idrs)->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -67,9 +105,25 @@ class MerchantController extends Controller
      * @param  \App\Models\Merchant  $merchant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Merchant $merchant)
+    public function update($id, Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::checkifexist('nama_toko', 'nama_toko', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('gender', 'gender', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('tanggal_lahir', 'tanggal_lahir', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('profile_img', 'profile_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('cover_img', 'cover_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('profile', 'profile', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('pin', 'pin', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
+            $merchant = Merchant::findOrFail($id)->update($dataTable);
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -78,8 +132,13 @@ class MerchantController extends Controller
      * @param  \App\Models\Merchant  $merchant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Merchant $merchant)
+    public function destroy($id)
     {
-        //
+        try {
+            $merchant = Merchant::findOrFail($id)->delete();
+            return ResponseFormatter::success($merchant, 'Berhasil menghapus data');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 }
