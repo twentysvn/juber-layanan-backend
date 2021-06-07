@@ -119,8 +119,9 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('pin', 'pin', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
-            $merchant = Merchant::findOrFail($id)->update($dataTable);
-            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+            $merchant = Merchant::findOrFail($id);
+            $merchant->update($dataTable);
+            return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
             return ResponseFormatter::error(null, $th->getMessage(), 500);
         }
@@ -135,8 +136,9 @@ class MerchantController extends Controller
     public function destroy($id)
     {
         try {
-            $merchant = Merchant::findOrFail($id)->delete();
-            return ResponseFormatter::success($merchant, 'Berhasil menghapus data');
+            $merchant = Merchant::findOrFail($id);
+            $merchant->delete();
+            return ResponseFormatter::success($merchant, 'Berhasil menghapus data merhcant');
         } catch (\Throwable $th) {
             return ResponseFormatter::error(null, $th->getMessage(), 500);
         }

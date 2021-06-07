@@ -129,8 +129,9 @@ class AlamatMerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('rincian', 'rincian', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('lat', 'lat', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('lon', 'lon', $request, $dataTable);
-            $alamat = AlamatMerchant::findOrFail($id)->update($dataTable);
-            return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
+            $alamat = AlamatMerchant::findOrFail($id);
+            $alamat->update($dataTable);
+            return ResponseFormatter::success($alamat, 'Berhasil mengubah data');
         } catch (\Throwable $th) {
             return ResponseFormatter::error(null, $th->getMessage(), 500);
         }
@@ -145,7 +146,8 @@ class AlamatMerchantController extends Controller
     public function destroy($id)
     {
         try {
-            $alamat = AlamatMerchant::findOrFail($id)->delete();
+            $alamat = AlamatMerchant::findOrFail($id);
+            $alamat->delete();
             return ResponseFormatter::success($alamat, 'Berhasil menghapus data');
         } catch (\Throwable $th) {
             return ResponseFormatter::error(null, $th->getMessage(), 500);

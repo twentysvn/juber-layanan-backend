@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FoodishProduct;
+use App\Helpers\RequestChecker;
 use Illuminate\Http\Request;
+use App\Models\FoodishProduct;
+use App\Helpers\ResponseFormatter;
 
 class FoodishProductController extends Controller
 {
@@ -14,7 +16,12 @@ class FoodishProductController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $foodish = FoodishProduct::all();
+            return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -35,7 +42,26 @@ class FoodishProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::add('mc_id', 'mc_id', $request, $dataTable);
+            $dataTable = RequestChecker::add('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::add('nama', 'nama', $request, $dataTable);
+            $dataTable = RequestChecker::add('deskripsi', 'deskripsi', $request, $dataTable);
+            $dataTable = RequestChecker::add('id_kategori', 'id_kategori', $request, $dataTable);
+            $dataTable = RequestChecker::add('kategori', 'kategori', $request, $dataTable);
+            $dataTable = RequestChecker::add('harga', 'harga', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('id_delivery', 'id_delivery', $request, $dataTable);
+            $dataTable = RequestChecker::add('delivery', 'delivery', $request, $dataTable);
+            $dataTable = RequestChecker::add('harga_delivery', 'harga_delivery', $request, $dataTable);
+            $dataTable = RequestChecker::add('berat', 'berat', $request, $dataTable);
+            $dataTable = RequestChecker::add('gambar', 'gambar', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('aktif', 'aktif', $request, $dataTable);
+            $foodish = FoodishProduct::create($dataTable);
+            return ResponseFormatter::success($foodish, 'Berhasil menyimpan data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -44,14 +70,24 @@ class FoodishProductController extends Controller
      * @param  \App\Models\FoodishProduct  $foodishProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(FoodishProduct $foodishProduct)
+    public function show($id)
     {
-        //
+        try {
+            $foodish = FoodishProduct::findOrFail($id)->get();
+            return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     public function byidrs($idrs)
     {
-        # code...
+        try {
+            $foodish = FoodishProduct::where('idrs', $idrs)->get();
+            return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -72,9 +108,29 @@ class FoodishProductController extends Controller
      * @param  \App\Models\FoodishProduct  $foodishProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FoodishProduct $foodishProduct)
+    public function update($id, Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::checkifexist('mc_id', 'mc_id', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('nama', 'nama', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('deskripsi', 'deskripsi', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('id_kategori', 'id_kategori', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('kategori', 'kategori', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('harga', 'harga', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('id_delivery', 'id_delivery', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('delivery', 'delivery', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('harga_delivery', 'harga_delivery', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('berat', 'berat', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('gambar', 'gambar', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('aktif', 'aktif', $request, $dataTable);
+            $foodish = FoodishProduct::findOrFail($id);
+            $foodish->update($dataTable);
+            return ResponseFormatter::success($foodish, 'Berhasil mengubah data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -83,8 +139,14 @@ class FoodishProductController extends Controller
      * @param  \App\Models\FoodishProduct  $foodishProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FoodishProduct $foodishProduct)
+    public function destroy($id)
     {
-        //
+        try {
+            $foodish = FoodishProduct::findOrFail($id);
+            $foodish->delete();
+            return ResponseFormatter::success($foodish, 'Berhasil menghapus data produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 }

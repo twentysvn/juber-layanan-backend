@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Rekening;
 use Illuminate\Http\Request;
+use App\Helpers\RequestChecker;
+use App\Helpers\ResponseFormatter;
 
 class RekeningController extends Controller
 {
@@ -14,7 +16,12 @@ class RekeningController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $rekening = Rekening::all();
+            return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -35,7 +42,21 @@ class RekeningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::add('nama', 'nama', $request, $dataTable);
+            $dataTable = RequestChecker::add('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::add('no_rek', 'no_rek', $request, $dataTable);
+            $dataTable = RequestChecker::add('kode_bank', 'kode_bank', $request, $dataTable);
+            $dataTable = RequestChecker::add('nama_bank', 'nama_bank', $request, $dataTable);
+            $dataTable = RequestChecker::add('nama_detail_bank', 'nama_detail_bank', $request, $dataTable);
+            $dataTable = RequestChecker::add('cabang', 'cabang', $request, $dataTable);
+            $dataTable = RequestChecker::add('kota', 'kota', $request, $dataTable);
+            $rekening = Rekening::create($dataTable);
+            return ResponseFormatter::success($rekening, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -44,14 +65,24 @@ class RekeningController extends Controller
      * @param  \App\Models\Rekening  $rekening
      * @return \Illuminate\Http\Response
      */
-    public function show(Rekening $rekening)
+    public function show($id)
     {
-        //
+        try {
+            $rekening = Rekening::finOrFail($id)->get();
+            return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     public function byidrs($idrs)
     {
-        # code...
+        try {
+            $rekening = Rekening::where('idrs', $idrs)->get();
+            return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
     /**
      * Show the form for editing the specified resource.
@@ -71,9 +102,24 @@ class RekeningController extends Controller
      * @param  \App\Models\Rekening  $rekening
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rekening $rekening)
+    public function update($id, Request $request)
     {
-        //
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::checkifexist('nama', 'nama', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('no_rek', 'no_rek', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('kode_bank', 'kode_bank', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('nama_bank', 'nama_bank', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('nama_detail_bank', 'nama_detail_bank', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('cabang', 'cabang', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('kota', 'kota', $request, $dataTable);
+            $rekening = Rekening::findOrFail($id);
+            $rekening->update($dataTable);
+            return ResponseFormatter::success($rekening, 'Berhasil mengubah data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 
     /**
@@ -82,8 +128,14 @@ class RekeningController extends Controller
      * @param  \App\Models\Rekening  $rekening
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rekening $rekening)
+    public function destroy($id)
     {
-        //
+        try {
+            $rekening = Rekening::findOrFail($id);
+            $rekening->delete();
+            return ResponseFormatter::success($rekening, 'Berhasil menghapus data rekening');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
     }
 }
