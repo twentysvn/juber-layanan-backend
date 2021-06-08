@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlamatMerchantController;
 use App\Http\Controllers\FoodishProductController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\NPWPController;
 use App\Http\Controllers\RekeningController;
 use App\Models\FoodishProduct;
 use Illuminate\Http\Request;
@@ -51,3 +52,10 @@ Route::get('rekening/idrs/{idrs}', [RekeningController::class, 'byidrs']);
 Route::post('rekening', [RekeningController::class, 'store']);
 Route::put('rekening/{id}', [RekeningController::class, 'update']);
 Route::delete('rekening/{id}', [RekeningController::class, 'destroy']);
+
+Route::get('npwp', [NPWPController::class, 'index']);
+Route::get('npwp/{id}', [NPWPController::class, 'show']);
+Route::get('npwp/idrs/{idrs}', [NPWPController::class, 'byidrs']);
+Route::post('npwp', [NPWPController::class, 'store']);
+Route::put('npwp/{id}', [NPWPController::class, 'update']);
+Route::delete('npwp/{id}', [NPWPController::class, 'destroy']);
