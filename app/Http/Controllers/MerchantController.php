@@ -127,6 +127,28 @@ class MerchantController extends Controller
         }
     }
 
+    public function updatebyidrs($idrs, Request $request)
+    {
+        try {
+            $dataTable = [];
+            $dataTable = RequestChecker::checkifexist('nama_toko', 'nama_toko', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('idrs', 'idrs', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('gender', 'gender', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('tanggal_lahir', 'tanggal_lahir', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('profile_img', 'profile_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('cover_img', 'cover_img', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('profile', 'profile', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('pin', 'pin', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
+            $merchant = Merchant::where('idrs', $idrs);
+            $merchant->update($dataTable);
+            return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error(null, $th->getMessage(), 500);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
