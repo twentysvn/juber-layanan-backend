@@ -17,7 +17,7 @@ class ResponseFormatter
             'code' => 200,
             'success' => true,
             'message' => null,
-            'data' => null,
+            'lobj' => null,
         ],
 
     ];
@@ -28,7 +28,7 @@ class ResponseFormatter
     public static function success($data = null, $message = null)
     {
         self::$response['data']['message'] = $message;
-        self::$response['data']['data'] = $data;
+        self::$response['data']['lobj'] = $data;
 
         return response()->json(self::$response, self::$response['data']['code']);
     }
@@ -41,7 +41,7 @@ class ResponseFormatter
         self::$response['data']['success'] = false;
         self::$response['data']['code'] = $code;
         self::$response['data']['message'] = $message;
-        self::$response['data']['data'] = $data;
+        self::$response['data']['lobj'] = $data;
 
         return response()->json(self::$response, self::$response['data']['code']);
     }
