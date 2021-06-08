@@ -20,7 +20,7 @@ class MerchantController extends Controller
             $merchant = Merchant::all();
             return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -57,7 +57,7 @@ class MerchantController extends Controller
             $merchant = Merchant::create($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -73,7 +73,7 @@ class MerchantController extends Controller
             $merchant = Merchant::findOrFail($id)->get();
             return ResponseFormatter::success($merchant, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -83,7 +83,7 @@ class MerchantController extends Controller
             $merchant = Merchant::where('idrs', $idrs)->get();
             return ResponseFormatter::success($merchant, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -123,7 +123,7 @@ class MerchantController extends Controller
             $merchant->update($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -145,7 +145,7 @@ class MerchantController extends Controller
             $merchant->update($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -162,7 +162,7 @@ class MerchantController extends Controller
             $merchant->delete();
             return ResponseFormatter::success($merchant, 'Berhasil menghapus data merhcant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 }

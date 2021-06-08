@@ -20,7 +20,7 @@ class RekeningController extends Controller
             $rekening = Rekening::all();
             return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -55,7 +55,7 @@ class RekeningController extends Controller
             $rekening = Rekening::create($dataTable);
             return ResponseFormatter::success($rekening, 'Berhasil mengambil data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -71,7 +71,7 @@ class RekeningController extends Controller
             $rekening = Rekening::findOrFail($id)->get();
             return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -81,7 +81,7 @@ class RekeningController extends Controller
             $rekening = Rekening::where('idrs', $idrs)->get();
             return ResponseFormatter::success($rekening, 'Berhasil mengambil data rekening');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
     /**
@@ -118,7 +118,7 @@ class RekeningController extends Controller
             $rekening->update($dataTable);
             return ResponseFormatter::success($rekening, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -135,7 +135,7 @@ class RekeningController extends Controller
             $rekening->delete();
             return ResponseFormatter::success($rekening, 'Berhasil menghapus data rekening');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 }

@@ -17,7 +17,7 @@ class ResponseFormatter
             'code' => 200,
             'success' => true,
             'message' => null,
-            'lobj' => null,
+            'lobj' => [],
         ],
 
     ];
@@ -25,7 +25,7 @@ class ResponseFormatter
     /**
      * Give success response.
      */
-    public static function success($data = null, $message = null)
+    public static function success($data = [], $message = null)
     {
         self::$response['data']['message'] = $message;
         self::$response['data']['lobj'] = $data;
@@ -36,7 +36,7 @@ class ResponseFormatter
     /**
      * Give error response.
      */
-    public static function error($data = null, $message = null, $code = 400)
+    public static function error($data = [], $message = null, $code = 400)
     {
         self::$response['data']['success'] = false;
         self::$response['data']['code'] = $code;

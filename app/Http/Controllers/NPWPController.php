@@ -20,7 +20,7 @@ class NPWPController extends Controller
             $npwp = NPWP::all();
             return ResponseFormatter::success($npwp, 'Berhasil mengambil data NPWP');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -53,7 +53,7 @@ class NPWPController extends Controller
             $npwp = NPWP::create($dataTable);
             return ResponseFormatter::success($npwp, 'Berhasil menyimpan data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -69,7 +69,7 @@ class NPWPController extends Controller
             $npwp = NPWP::findOrFail($id);
             return ResponseFormatter::success($npwp, 'Berhasil mengambil data NPWP');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -79,7 +79,7 @@ class NPWPController extends Controller
             $npwp = NPWP::where('idrs', $idrs)->get();
             return ResponseFormatter::success($npwp, 'Berhasil mengambil data NPWP');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -115,7 +115,7 @@ class NPWPController extends Controller
             $npwp->update($dataTable);
             return ResponseFormatter::success($npwp, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -132,7 +132,7 @@ class NPWPController extends Controller
             $npwp->delete();
             return ResponseFormatter::success($npwp, 'Berhasil menghapus data NPWP');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 }

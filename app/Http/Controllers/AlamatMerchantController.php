@@ -20,7 +20,7 @@ class AlamatMerchantController extends Controller
             $alamat = AlamatMerchant::all();
             return ResponseFormatter::success($alamat, 'Data Berhasil Diambil');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -62,7 +62,7 @@ class AlamatMerchantController extends Controller
             $alamat = AlamatMerchant::create($dataTable);
             return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -78,7 +78,7 @@ class AlamatMerchantController extends Controller
             $alamat = AlamatMerchant::findOrFail($id)->get();
             return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -88,7 +88,7 @@ class AlamatMerchantController extends Controller
             $alamat = AlamatMerchant::where('idrs', $idrs)->get();
             return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -133,7 +133,7 @@ class AlamatMerchantController extends Controller
             $alamat->update($dataTable);
             return ResponseFormatter::success($alamat, 'Berhasil mengubah data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -150,7 +150,7 @@ class AlamatMerchantController extends Controller
             $alamat->delete();
             return ResponseFormatter::success($alamat, 'Berhasil menghapus data');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 }

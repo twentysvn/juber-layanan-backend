@@ -20,7 +20,7 @@ class FoodishProductController extends Controller
             $foodish = FoodishProduct::all();
             return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -60,7 +60,7 @@ class FoodishProductController extends Controller
             $foodish = FoodishProduct::create($dataTable);
             return ResponseFormatter::success($foodish, 'Berhasil menyimpan data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -76,7 +76,7 @@ class FoodishProductController extends Controller
             $foodish = FoodishProduct::findOrFail($id)->get();
             return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -86,7 +86,7 @@ class FoodishProductController extends Controller
             $foodish = FoodishProduct::where('idrs', $idrs)->get();
             return ResponseFormatter::success($foodish, 'Berhasil mengambil data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -98,7 +98,7 @@ class FoodishProductController extends Controller
             $search = FoodishProduct::where('idrs', $idrs)->where('nama', 'LIKE', '%' . $query . '%')->get();
             return ResponseFormatter::success($search, 'Berhasil mengambil data pencarian');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -141,7 +141,7 @@ class FoodishProductController extends Controller
             $foodish->update($dataTable);
             return ResponseFormatter::success($foodish, 'Berhasil mengubah data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 
@@ -158,7 +158,7 @@ class FoodishProductController extends Controller
             $foodish->delete();
             return ResponseFormatter::success($foodish, 'Berhasil menghapus data produk');
         } catch (\Throwable $th) {
-            return ResponseFormatter::error(null, $th->getMessage(), 500);
+            return ResponseFormatter::error([], $th->getMessage(), 500);
         }
     }
 }
