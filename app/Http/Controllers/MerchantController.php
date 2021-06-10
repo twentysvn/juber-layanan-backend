@@ -24,6 +24,46 @@ class MerchantController extends Controller
         }
     }
 
+    public function foodish()
+    {
+        try {
+            $merchant = Merchant::where('toko_foodish', '1')->with('alamat')->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
+    public function layanan()
+    {
+        try {
+            $merchant = Merchant::where('toko_layanan', '1')->with('alamat')->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
+    public function layananidrs($idrs)
+    {
+        try {
+            $merchant = Merchant::where('idrs', $idrs)->where('toko_layanan', '1')->with('alamat')->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
+    public function foodishidrs($idrs)
+    {
+        try {
+            $merchant = Merchant::where('idrs', $idrs)->where('toko_foodish', '1')->with('alamat')->get();
+            return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -124,6 +164,8 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('id_alamat', 'id_alamat', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_foodish', 'toko_foodish', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_layanan', 'toko_layanan', $request, $dataTable);
             $merchant = Merchant::findOrFail($id);
             $merchant->update($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
@@ -147,6 +189,8 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('id_alamat', 'id_alamat', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_foodish', 'toko_foodish', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_layanan', 'toko_layanan', $request, $dataTable);
             $selectedRows = 'alamat:id,nama,no_hp,id_provinsi,provinsi,id_kota_kab,kota_kab,id_kecamatan,kecamatan,kode_pos,jalan,rincian,lat,lon';
             $merchant = Merchant::where('idrs', $idrs);
             $merchant->update($dataTable);

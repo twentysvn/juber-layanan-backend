@@ -39,6 +39,6 @@ class CreateFoodishProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foodish_products');
+        Schema::dropIfExists('foodish_produk');
     }
 }

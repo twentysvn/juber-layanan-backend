@@ -41,6 +41,6 @@ class CreateAlamatMerchantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alamat_merchants');
+        Schema::dropIfExists('alamat_merchant');
     }
 }

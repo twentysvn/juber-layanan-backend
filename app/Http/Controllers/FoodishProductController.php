@@ -90,7 +90,7 @@ class FoodishProductController extends Controller
         }
     }
 
-    public function getbyname(Request $request)
+    public function search(Request $request)
     {
         try {
             $idrs = $request->idrs;

@@ -17,7 +17,8 @@ class AlamatMerchantController extends Controller
     public function index()
     {
         try {
-            $alamat = AlamatMerchant::with('merchant')->get();
+            $selectedRows = 'merchant:idrs,nama_toko,toko_foodish,toko_layanan';
+            $alamat = AlamatMerchant::with($selectedRows)->get();
             return ResponseFormatter::success($alamat, 'Data Berhasil Diambil');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
@@ -75,7 +76,8 @@ class AlamatMerchantController extends Controller
     public function show($id)
     {
         try {
-            $alamat = AlamatMerchant::findOrFail($id)->get();
+            $selectedRows = 'merchant:idrs,nama_toko,toko_foodish,toko_layanan';
+            $alamat = AlamatMerchant::findOrFail($id)->with($selectedRows)->get();
             return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
@@ -85,7 +87,8 @@ class AlamatMerchantController extends Controller
     public function byidrs($idrs)
     {
         try {
-            $alamat = AlamatMerchant::where('idrs', $idrs)->get();
+            $selectedRows = 'merchant:idrs,nama_toko,toko_foodish,toko_layanan';
+            $alamat = AlamatMerchant::where('idrs', $idrs)->with($selectedRows)->get();
             return ResponseFormatter::success($alamat, 'Berhasil mengambil data');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);

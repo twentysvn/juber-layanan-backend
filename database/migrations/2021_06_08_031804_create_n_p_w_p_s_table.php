@@ -32,6 +32,6 @@ class CreateNPWPSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('n_p_w_p_s');
+        Schema::dropIfExists('npwp');
     }
 }

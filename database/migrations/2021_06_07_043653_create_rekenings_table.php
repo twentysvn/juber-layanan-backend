@@ -34,6 +34,6 @@ class CreateRekeningsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rekenings');
+        Schema::dropIfExists('rekening');
     }
 }
