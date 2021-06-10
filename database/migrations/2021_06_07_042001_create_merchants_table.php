@@ -25,6 +25,8 @@ class CreateMerchantsTable extends Migration
             $table->string("pin", 6);
             $table->string("no_hp", 13);
             $table->string("id_alamat")->nullable();
+            $table->enum("toko_foodish", [0, 1])->default(0);
+            $table->enum("toko_layanan", [0, 1])->default(0);
             $table->string("token", 250)->nullable();
             $table->timestamps();
         });

@@ -55,6 +55,8 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::add('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('id_alamat', 'id_alamat', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_foodish', 'toko_foodish', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('toko_layanan', 'toko_layanan', $request, $dataTable);
             $merchant = Merchant::create($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengambil data merchant');
         } catch (\Throwable $th) {
