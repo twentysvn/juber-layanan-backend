@@ -10,4 +10,9 @@ class Merchant extends Model
     protected $table = 'merchants';
     protected $guarded = [];
     use HasFactory;
+
+    public function alamat()
+    {
+        return $this->belongsTo(AlamatMerchant::class, 'alamat_utama', 'id');
+    }
 }

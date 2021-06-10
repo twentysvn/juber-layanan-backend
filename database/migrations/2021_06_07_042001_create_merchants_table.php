@@ -24,6 +24,7 @@ class CreateMerchantsTable extends Migration
             $table->string("profile", 250)->nullable();
             $table->string("pin", 6);
             $table->string("no_hp", 13);
+            $table->string("id_alamat")->nullable();
             $table->string("token", 250)->nullable();
             $table->timestamps();
         });

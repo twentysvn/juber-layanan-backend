@@ -17,7 +17,7 @@ class NPWPController extends Controller
     public function index()
     {
         try {
-            $npwp = NPWP::all();
+            $npwp = NPWP::with('merchant')->get();
             return ResponseFormatter::success($npwp, 'Berhasil mengambil data NPWP');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);

@@ -17,7 +17,7 @@ class AlamatMerchantController extends Controller
     public function index()
     {
         try {
-            $alamat = AlamatMerchant::all();
+            $alamat = AlamatMerchant::with('merchant')->get();
             return ResponseFormatter::success($alamat, 'Data Berhasil Diambil');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
