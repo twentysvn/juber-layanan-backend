@@ -13,6 +13,6 @@ class Merchant extends Model
 
     public function alamat()
     {
-        return $this->belongsTo(AlamatMerchant::class, 'alamat_utama', 'id');
+        return $this->belongsTo(AlamatMerchant::class, 'id_alamat', 'id');
     }
 }

@@ -122,7 +122,7 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('id_alamat', 'id_alamat', $request, $dataTable);
-            $merchant = Merchant::findOrFail($id)->with('');
+            $merchant = Merchant::findOrFail($id);
             $merchant->update($dataTable);
             return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
@@ -145,12 +145,11 @@ class MerchantController extends Controller
             $dataTable = RequestChecker::checkifexist('no_hp', 'no_hp', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('token', 'token', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('id_alamat', 'id_alamat', $request, $dataTable);
-            // FIXME: response tidak sesuai
             $selectedRows = 'alamat:id,nama,no_hp,id_provinsi,provinsi,id_kota_kab,kota_kab,id_kecamatan,kecamatan,kode_pos,jalan,rincian,lat,lon';
             $merchant = Merchant::where('idrs', $idrs);
             $merchant->update($dataTable);
-            $merchant =  Merchant::where('idrs', $idrs)->with($selectedRows)->get();
-            return ResponseFormatter::success($merchant, 'Berhasil mengubah data merchant');
+            $result =  Merchant::where('idrs', $idrs)->with($selectedRows)->get();
+            return ResponseFormatter::success($result, 'Berhasil mengubah data merchant');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
         }
