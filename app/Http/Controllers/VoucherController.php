@@ -6,6 +6,7 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use App\Helpers\RequestChecker;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 
 class VoucherController extends Controller
 {
@@ -41,7 +42,34 @@ class VoucherController extends Controller
         try {
             $selectedRows = 'merchant:id,idrs,nama_toko,toko_foodish,toko_layanan';
             $voucher = Voucher::where('tipe', 2)->with($selectedRows)->get();
-            return ResponseFormatter::success($voucher, 'Berhasil mengambil data voucher tipe : toko');
+            return ResponseFormatter::success($voucher, 'Berhasil mengambil data voucher tipe : produk');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
+    public function getproduk(Request $request)
+    {
+        try {
+            $kode = $request->kode;
+            $voucher = Voucher::where('kode', $kode)->get();
+            if (count($voucher) > 0) {
+                $produk = $voucher[0]->produk;
+            } else {
+                return ResponseFormatter::error([], 'Tidak ada produk', 500);
+            }
+            $produk = explode("#", $produk);
+            $produk = array_filter($produk);
+            $whereCondition = '';
+            for ($i = 0; $i < count($produk); $i++) {
+                $whereCondition = $whereCondition . 'id=' . $produk[$i];
+                if ($i != count($produk) - 1) {
+                    $whereCondition = $whereCondition . ' OR ';
+                }
+            }
+            $query = 'select * from foodish_produk where ' . $whereCondition;
+            $selected = DB::select($query);
+            return ResponseFormatter::success($selected, 'Berhasil mengambil ' . count($selected) . ' data');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
         }
@@ -81,6 +109,8 @@ class VoucherController extends Controller
             $dataTable = RequestChecker::add('nilai_diskon', 'nilai_diskon', $request, $dataTable);
             $dataTable = RequestChecker::add('diskon_batas', 'diskon_batas', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('diskon_batas_nilai', 'diskon_batas_nilai', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('penempatan', 'penempatan', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('produk', 'produk', $request, $dataTable);
             $voucher = Voucher::create($dataTable);
             return ResponseFormatter::success($voucher, 'Berhasil menyimpan data voucher');
         } catch (\Throwable $th) {
@@ -107,7 +137,8 @@ class VoucherController extends Controller
     public function byidrs($idrs)
     {
         try {
-            $voucher = Voucher::where('idrs', $idrs)->get();
+            $selectedRows = 'merchant:id,idrs,nama_toko,toko_foodish,toko_layanan';
+            $voucher = Voucher::where('idrs', $idrs)->with($selectedRows)->get();
             return ResponseFormatter::success($voucher, 'Berhasil mengambil data voucher');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
@@ -150,6 +181,8 @@ class VoucherController extends Controller
             $dataTable = RequestChecker::checkifexist('nilai_diskon', 'nilai_diskon', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('diskon_batas', 'diskon_batas', $request, $dataTable);
             $dataTable = RequestChecker::checkifexist('diskon_batas_nilai', 'diskon_batas_nilai', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('penempatan', 'penempatan', $request, $dataTable);
+            $dataTable = RequestChecker::checkifexist('produk', 'produk', $request, $dataTable);
             $voucher = Voucher::findOrFail($id);
             $voucher->update($dataTable);
             return ResponseFormatter::success($voucher, 'Berhasil menyimpan data voucher');

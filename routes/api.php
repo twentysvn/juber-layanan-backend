@@ -52,6 +52,7 @@ Route::post('foodish/product', [FoodishProductController::class, 'store']);
 Route::put('foodish/product/{id}', [FoodishProductController::class, 'update']);
 Route::delete('foodish/product/{id}', [FoodishProductController::class, 'destroy']);
 Route::post('foodish/product/search', [FoodishProductController::class, 'search']);
+Route::post('foodish/product/multiple', [FoodishProductController::class, 'multipleid']);
 
 Route::get('rekening', [RekeningController::class, 'index']);
 Route::get('rekening/{id}', [RekeningController::class, 'show']);
@@ -75,6 +76,7 @@ Route::get('voucher/idrs/{idrs}', [VoucherController::class, 'byidrs']);
 Route::put('voucher/{id}', [VoucherController::class, 'update']);
 Route::delete('voucher/{id}', [VoucherController::class, 'destroy']);
 Route::post('voucher', [VoucherController::class, 'store']);
+Route::post('voucher/getproduk', [VoucherController::class, 'getproduk']);
 
 Route::get('diskon', [DiskonController::class, 'index']);
 Route::get('diskon/{id}', [DiskonController::class, 'show']);

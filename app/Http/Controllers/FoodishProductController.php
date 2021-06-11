@@ -6,6 +6,7 @@ use App\Helpers\RequestChecker;
 use Illuminate\Http\Request;
 use App\Models\FoodishProduct;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 
 class FoodishProductController extends Controller
 {
@@ -97,6 +98,27 @@ class FoodishProductController extends Controller
             $query = $request->name;
             $search = FoodishProduct::where('idrs', $idrs)->where('nama', 'LIKE', '%' . $query . '%')->get();
             return ResponseFormatter::success($search, 'Berhasil mengambil data pencarian');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
+    public function multipleid(Request $request)
+    {
+        try {
+            $produk = $request->produk;
+            $produk = explode("#", $produk);
+            $produk = array_filter($produk);
+            $whereCondition = '';
+            for ($i = 0; $i < count($produk); $i++) {
+                $whereCondition = $whereCondition . 'id=' . $produk[$i];
+                if ($i != count($produk) - 1) {
+                    $whereCondition = $whereCondition . ' OR ';
+                }
+            }
+            $query = 'select * from foodish_produk where ' . $whereCondition;
+            $selected = DB::select($query);
+            return ResponseFormatter::success($selected, 'Berhasil mengambil ' . count($selected) . ' data produk');
         } catch (\Throwable $th) {
             return ResponseFormatter::error([], $th->getMessage(), 500);
         }

@@ -29,6 +29,8 @@ class CreateVouchersTable extends Migration
             $table->string('nilai_diskon');
             $table->enum('diskon_batas', [0, 1])->default(1);
             $table->integer('diskon_batas_nilai')->default(0);
+            $table->string('penempatan')->nullable();
+            $table->string('produk')->nullable();
             $table->timestamps();
         });
     }
