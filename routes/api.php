@@ -41,6 +41,7 @@ Route::get('merchant/layanan/idrs/{idrs}', [MerchantController::class, 'layanani
 Route::get('merchant/{id}', [MerchantController::class, 'show']);
 Route::get('merchant/idrs/{idrs}', [MerchantController::class, 'byidrs']);
 Route::post('merchant', [MerchantController::class, 'store']);
+Route::put('merchant/status', [MerchantController::class, 'changestatus']);
 Route::put('merchant/{id}', [MerchantController::class, 'update']);
 Route::put('merchant/idrs/{idrs}', [MerchantController::class, 'updatebyidrs']);
 Route::delete('merchant/{id}', [MerchantController::class, 'destroy']);

@@ -17,6 +17,7 @@ class CreateMerchantsTable extends Migration
             $table->id();
             $table->string("nama_toko", 250);
             $table->string("idrs", 7)->unique();
+            $table->enum("status", ['buka', 'tutup'])->default('tutup');
             $table->enum("gender", [0, 1, 2])->default(0);
             $table->string("tanggal_lahir", 250)->nullable();
             $table->string("profile_img", 250);

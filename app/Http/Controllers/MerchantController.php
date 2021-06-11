@@ -64,6 +64,24 @@ class MerchantController extends Controller
         }
     }
 
+    public function changestatus(Request $request)
+    {
+        try {
+            $idrs = $request->idrs;
+            $status = $request->status;
+            $merchant = Merchant::where('idrs', $idrs)->update(["status" => $status]);
+            if ($merchant > 0) {
+                $merchant = ["IDRS" => $idrs, "Sukses" => true];
+            } else {
+                $merchant = ["IDRS" => $idrs, "Sukses" => false];
+                return ResponseFormatter::success($merchant, 'Gagal mengubah status toko, IDRS tidak ditemukan');
+            }
+            return ResponseFormatter::success($merchant, 'Berhasil mengubah status toko');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], $th->getMessage(), 500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
